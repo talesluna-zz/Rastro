@@ -4,8 +4,8 @@
 *Atualizado em: 21/07/2016*
 
 ###### Exemplos:
- JSON: 
-    *http://taleslunadev.com/rastro/json/JGXXXXXXXXXBR*
+ JSON: *http://taleslunadev.com/rastro/json/JGXXXXXXXXXBR*
+    
  XML:
     *http://taleslunadev.com/rastro/xml/JGXXXXXXXXXBR*
   
@@ -17,12 +17,16 @@
  
  * 200 OK
     > Informações presentes e exibidas
+
  * 404 Not Found
     > Não foram encontradas informações de rastreio
+
  * 408 Request Timeout 
     > Falha ao se conectar com os correios
+
  * 500 Erro interno 
     > Erro nas classes da aplicação
+
  * 403 Forbidden
     > Tipo de retorno desejado não está implementado
 
