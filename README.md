@@ -1,93 +1,87 @@
-# Rastro - PHP API
-*Retorna dados de rastreamento de objetos nos correios por meio do código de rastreio com saídas em JSON ou XML.*
+# RastroJS
+Rastro - API Rastreamento de objetos - Correios PHP/Lumen/Laravel
 
-*Atualizado em: 21/07/2016*
+Retorna dados de rastreamento de objetos nos correios por meio do código de rastreio com saídas em JSON,XML ou CSV.
 
-###### Exemplos:
- JSON: 
- *http://taleslunadev.com/rastro/json/JGXXXXXXXXXBR*
-    
- XML:
-    *http://taleslunadev.com/rastro/xml/JGXXXXXXXXXBR*
-  
-------------------------------------------
+### Observação Importante
+Os correios desativaram o sistema WebSRO (websro.correios.com.br) em maio de 2017, esse sistema informava todos os dados de rastreio do objeto desde a origem até o destino, alguns desenvolvedores estão disponibilizando sites de consulta baseados no antigo WebSRO, decidi não usar estes meios para servir essa API pois são páginas de terceiros contendo propagandas e que podem ficar instáveis, em vez disso utilizei outra página oficial dos Correios para fazer a consulta, porém desse modo por hora só é possivel ver a última situação do objeto.
 
-###### Response Codes:
+### Novidades
+Foi adicionada a consulta de multiplos objetos, separados por ";" (ponto e virgula), veja os exemplos abaixo.
 
- Para controle dos dados retornados (Novo)
- 
- * 200 OK
+### Exemplos:
+- http://you_host:port/xml/DUXX1595899BR;DUYY1595799BR
+- http://you_host:port/json/DUXX1595899BR;DUYY1595799BR
+
+### Uso/Instalação:
+
+Em sua linha de comando execute:
+```sh
+$ git clone https://github.com/talesluna/Rastro/ && cd Rastro
+$ composer install
+$ composer run dev-deploy (para desenvolvimento)
+```
+
+### Response Codes:
+
+- 200 OK
+
     > Informações presentes e exibidas
 
- * 404 Not Found
+- 404 NOT_FOUND (obsoleto por enquanto)
+    
     > Não foram encontradas informações de rastreio
-
- * 408 Request Timeout 
+    
+- 408 REQUEST_TIMEOUT
+    
     > Falha ao se conectar com os correios
 
- * 500 Erro interno 
-    > Erro nas classes da aplicação
+- 400 BAD_REQUEST
 
- * 403 Forbidden
-    > Tipo de retorno desejado não está implementado
+    > Tipo de retorno não implementado ou algum param faltando
 
 
-------------------------------------------
+### Retornos:
 
-###### Saída JSON:
-  ``` JSON
-{
-	"DMXXXXXXXXXBR":[
-		{
-			"data":"08\/10\/2015 15:30",
-			"local":" AC VIA SHOPPING BARREIRO - Belo Horizonte\/MG",
-			"situacao":" Postado"
-		},
-		{
-			"data":"08\/10\/2015 17:29",
-			"local":" AC VIA SHOPPING BARREIRO - Belo Horizonte\/MG",
-			"situacao":"Encaminhado para UNIDADE DE CORREIOS\/BR"
-		},
-		{
-			"data":"09\/10\/2015 11:54",
-			"local":" CTE BELO HORIZONTE - BELO HORIZONTE\/MG",
-			"situacao":"Saiu para entrega ao destinat\u00e1rio"
-		}
-	  ]
-  }
-  ```
+- XML
 
-------------------------------------------
+    ``` XML
+        <?xml version='1.0'?>
+        <rastreio>
+            <DUXX1595899BR>
+                <codigo>DUXX1595899BR</codigo>
+                <situacao>Objeto entregue ao destinatário</situacao>
+                <local>Santana Do Paraiso/MG</local>
+                <data>18/05/2017</data>
+            </DUXX1595899BR>
+            <DUYY1595799BR>
+                <codigo>DUYY1595799BR</codigo>
+                <situacao>Objeto ainda não consta no sistema</situacao>
+                <local>null</local>
+                <data>null</data>
+            </DUYY1595799BR>
+        </rastreio>
+    ```
 
-###### Saída XML:
-  ``` XML
-  <?xml version="1.0" encoding="UTF-8"?>
-    <rastreamento cod='JGXXXXXXXXXBR'>
-	    <rastreio>
-		    <data>28/09/2015 17:44</data>
-		    <local> CDD INTENDENTE CAMARA - Ipatinga/MG</local>
-		    <situacao> Entrega Efetuada</situacao>
-	    </rastreio>
-    </rastreamento>
-  ```
+- JSON
 
-------------------------------------------
+    ```JSON
+    {
+        "DUXX1595899BR": {
+            "codigo": "DUXX1595899BR",
+            "situacao": "Objeto entregue ao destinatário",
+            "local": "Santana Do Paraiso/MG",
+            "data": "18/05/2017"
+        },
+        "DUYY1595799BR": {
+            "codigo": "DUYY1595799BR",
+            "situacao": "Objeto ainda não consta no sistema",
+            "local": null,
+            "data": null
+        }
+    }
+    ```
 
-###### Arquivos:
-  - Parse.class.php
-    >Classe que realiza parse do HTML e cria um array com os dados
-  
-  - Xml.class.php
-    >Classe que gera saída em XML
-  
-  - Json.class.php
-    >Classe que gera saída em JSON
-  
-  - Index.php
-    >Recebe as intruções e realiza
-  
-  - web.conf
-    >Configurações para URL amigável em IIS
-  
-  - .htaccess
-    >Configurações para URL amigável em Apache
+### License:
+- MIT
+
