@@ -1,0 +1,37 @@
+{
+    "name": "rastro",
+    "description": "API em PHP para serviço de rastreamento de objetos dos Correios.",
+    "keywords": ["api", "php", "correios", "rastreamento"],
+    "license": "MIT",
+    "type": "project",
+    "require": {
+        "php": ">=7.0",
+        "laravel/lumen-framework": "5.4.*",
+        "vlucas/phpdotenv": "~2.2",
+        "openlss/lib-array2xml": "^0.5.1",
+        "mnshankar/csv": "^1.8"
+    },
+    "require-dev": {
+        "fzaninotto/faker": "~1.4",
+        "phpunit/phpunit": "~5.0",
+        "mockery/mockery": "~0.9"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/"
+        }
+    },
+    "autoload-dev": {
+        "classmap": [
+            "tests/",
+            "database/"
+        ]
+    },
+    "scripts": {
+        "dev-deploy": [
+            "php -S localhost:8000 -t ./public"
+        ]
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
