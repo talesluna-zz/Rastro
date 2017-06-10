@@ -97,4 +97,17 @@ $app->group(['namespace' => 'App\Http\Controllers'], function ($app) {
     require __DIR__ . '/../routes/api.php';
 });
 
+
+/*
+|--------------------------------------------------------------------------
+| CORS Requests
+|--------------------------------------------------------------------------
+|
+| Allow headers and hosts
+|
+*/
+$app->middleware([
+    \App\Http\Middleware\Cors::class
+]);
+
 return $app;

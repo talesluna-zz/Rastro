@@ -16,6 +16,7 @@ class ParserCorreiosService extends RequestCorreiosService
 
        // Recebe HTML da request
        $data = $this->getResponse($objects);
+
        // Cria array de onde encontrar a tag tr (site dos correios e em tabelas)
        preg_match_all("@<td>(.*)</td>@", $data, $arr, PREG_PATTERN_ORDER);
        // Nessa "engenharia" todos os dados necessários já existem nesse índice

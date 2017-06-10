@@ -26,7 +26,7 @@ class IndexController extends Controller
      */
     public function index()
     {
-        return $this->response->send('txt', 'Olá Mundo', 400);
+        return $this->response->send('txt', '', 400);
     }
 
     /**
@@ -36,13 +36,37 @@ class IndexController extends Controller
      * @param string $objects
      * @return string
      */
-    public function discoverObjects(string $outputType, string $objects)
+    public function discoverObjects(string $outputType, $objects = null)
     {
         if ($objects) {
-
-            $objects = $this->parser->retrieverObjects($objects);
-            $objects = $this->transform->transform($objects, $outputType);
-            return $this->response->send($outputType, $objects, 200);
+            try {
+                $objects = $this->parser->retrieverObjects($objects);
+                $objects = $this->transform->transform($objects, $outputType);
+                return $this->response->send($outputType, $objects, 200);
+            } catch (\Exception $ex) {
+                // Se o tipo de retorno não existir, usar json
+                $outputType = $ex->getCode() == 400 ? 'json': $outputType;
+                $error = $this->transform->transform(
+                    collect([
+                        'error' => [
+                            'message'   =>$ex->getMessage(),
+                            'status'    => $ex->getCode()
+                        ]
+                    ]),
+                    $outputType
+                );
+                return $this->response->send($outputType, $error, $ex->getCode());
+            }
         }
+        $error = $this->transform->transform(
+            collect([
+                'error' => [
+                    'message'   => 'Informe os objetos (use ; para vários objetos)',
+                    'status'    => '400'
+                ]
+            ]),
+            $outputType
+        );
+        return $this->response->send($outputType, $error, 400);
     }
 }

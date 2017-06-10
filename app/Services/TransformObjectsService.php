@@ -17,11 +17,16 @@ class TransformObjectsService
      * @param Collection $data
      * @param string $type
      * @return mixed
+     * @throws \Exception
      */
     public function transform(Collection $data, string $type)
     {
-        $this->data = $data->toArray();
-        return $this->{$type}();
+        if(method_exists($this, $type)) {
+            $this->data = $data->toArray();
+            return $this->{$type}();
+        } else {
+            throw new \Exception('Tipo de retorno não implementado ou algum param faltando', 400);
+        }
     }
 
     /**
@@ -53,4 +58,5 @@ class TransformObjectsService
         //header('Content-disposition: filename="rastreio.csv"');
         return $csvObj->fromArray($this->data)->toString();
     }
+
 }
