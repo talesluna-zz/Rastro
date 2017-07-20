@@ -1,4 +1,4 @@
-# RastroJS
+# Rastro
 Rastro - API Rastreamento de objetos - Correios PHP/Lumen/Laravel
 
 Retorna dados de rastreamento de objetos nos correios por meio do código de rastreio com saídas em JSON,XML ou CSV.
