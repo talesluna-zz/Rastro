@@ -1,3 +1,10 @@
+# Descontinuado!
+Esta API não será mais atualizada na versão em PHP, portanto ela sera descontinuada.
+
+Versões mais atualizadas estarão dosponíveis na RastroJS, feita JS/ES6 para Node
+
+RastroJS: https://github.com/talesluna/RastroJS
+
 # Rastro
 Rastro - API Rastreamento de objetos - Correios PHP/Lumen/Laravel
 
